@@ -20472,6 +20472,10 @@ sub _create_foreign_server
 		{
 			$self->{oracle_fwd_dsn} = "dbserver '$1'";
 		}
+		elsif (!$self->{is_mysql} && $self->{oracle_dsn} !~ /\// && $self->{oracle_dsn} !~ /host=/)
+		{
+			$self->{oracle_fwd_dsn} = "dbserver '" . (split /:/, $self->{oracle_dsn})[2] . "'";
+		}
 		else
 		{
 			$self->{oracle_dsn} =~ /host=([^;]+)/;
